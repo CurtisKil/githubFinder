@@ -3,6 +3,7 @@ class UI {
     this.profile = document.getElementById("profile");
   }
 
+  // Display Profile
   showProfile(user) {
     // Take user data, build template literal then insert it into 'this.profile', which inserts it into the DOM
     this.profile.innerHTML = `
@@ -31,5 +32,43 @@ class UI {
     <h3 class="page-heading mb-3>Latest Repos</h3>
     <div id="repos">Latest Repos</div>
     `;
+  }
+
+  //   Show Alert
+  showAlert(message, className) {
+    //   Clear any remaining alerts
+    this.clearAlert();
+    // Create Div to display alert in
+    const div = document.createElement("div");
+    // Add Classes to div
+    div.className = className;
+    // Add text
+    div.appendChild(document.createTextNode(message));
+    // Get parent of search card
+    const container = document.querySelector(".searchContainer");
+    // Get search card
+    const search = document.querySelector(".search");
+    // Insert alert before/above search card
+    container.insertBefore(div, search);
+
+    // Timeout after 3 sec
+    setTimeout(() => {
+      this.clearAlert();
+    }, 3000);
+  }
+
+  /* Clear alert message before outputing it
+so that it doesn't display multiple times */
+  clearAlert() {
+    const currentAlert = document.querySelector(".alert");
+
+    if (currentAlert) {
+      currentAlert.remove();
+    }
+  }
+
+  // Clear Profile
+  clearProfile() {
+    this.profile.innerHTML = "";
   }
 }
