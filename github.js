@@ -1,19 +1,31 @@
 class GitHub {
   constructor() {
-    // 100 requests or more per hour means you need your api key and secret
-    this.client_id = "68ab222de4ea6dc0d04d";
-    this.client_secret = "9dcf849a0eed607173612eeaed0250b75006cc75";
+    this.config = {
+      headers: {
+        Authorization: " 051276336f7ac74038ea5e707fd0ad431a4ece44",
+      },
+    };
+    this.repos_count = 5;
+    this.repos_sort = "created: asc";
   }
-
   async getUser(user) {
     const profileResponse = await fetch(
-      `https://api.github.com/users/${user}?client_id=${this.client_id}&client_secret=${this.client_secret}`
+      `https://api.github.com/users/${user}`,
+      this.config
+    );
+
+    const repoResponse = await fetch(
+      `https://api.github.com/users/${user}/repos?per_page=${this.repos_count}&sort=${this.repos_sort}`,
+      this.config
     );
 
     const profile = await profileResponse.json();
 
+    const repos = await repoResponse.json();
+
     return {
       profile,
+      repos,
     };
   }
 }
